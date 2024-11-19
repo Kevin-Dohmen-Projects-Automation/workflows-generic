@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    uses: ../../pipelines/dotnet/generic/build/build.yml
+    uses: ./pipelines/dotnet/generic/build/build.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
@@ -24,14 +24,14 @@ jobs:
   test:
     if: ${{ !inputs.skipTests }}
     needs: build
-    uses: ../../pipelines/dotnet/generic/test/test.yml
+    uses: ./pipelines/dotnet/generic/test/test.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
 
   publish-package:
     needs: build
-    uses: ../../pipelines/dotnet/generic/publish/publishPackage.yml
+    uses: ./pipelines/dotnet/generic/publish/publishPackage.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
