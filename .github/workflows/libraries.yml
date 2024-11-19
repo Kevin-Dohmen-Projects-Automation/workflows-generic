@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    uses: ./pipelines/dotnet/generic/build/build.yml
+    uses: Kevin-Dohmen/pipelines-generic/.github/workflows/build.yml@main
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
@@ -24,14 +24,14 @@ jobs:
   test:
     if: ${{ !inputs.skipTests }}
     needs: build
-    uses: ./pipelines/dotnet/generic/test/test.yml
+    uses: Kevin-Dohmen/pipelines-generic/.github/workflows/test.yml@main
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
 
   publish-package:
     needs: build
-    uses: ./pipelines/dotnet/generic/publish/publishPackage.yml
+    uses: Kevin-Dohmen/pipelines-generic/.github/workflows/publishPackage.yml@main
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
