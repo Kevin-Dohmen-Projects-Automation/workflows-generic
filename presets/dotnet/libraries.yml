@@ -3,14 +3,14 @@ on:
     inputs:
       solutionPath:
         required: true
-        type: [string]
+        type: string
       skipTests:
         required: false
-        type: [boolean]
+        type: boolean
         default: true
       buildArtifactName:
         required: false
-        type: [string]
+        type: string
         default: 'build-artifact'
       
 
