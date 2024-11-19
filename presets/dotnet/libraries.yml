@@ -30,7 +30,7 @@ jobs:
       buildArtifactName: ${{ inputs.buildArtifactName }}
 
   publish-package:
-    needs: ${{ inputs.skipTests && 'build' || 'test' }}
+    needs: build
     uses: ../../pipelines/dotnet/generic/publish/publishPackage.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
