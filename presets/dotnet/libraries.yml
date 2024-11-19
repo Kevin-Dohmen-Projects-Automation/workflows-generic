@@ -21,13 +21,13 @@ jobs:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
   
-  # test:
-  #   if: ${{ !inputs.skipTests }}
-  #   needs: build
-  #   uses: ../../pipelines/dotnet/generic/test/test.yml
-  #   with:
-  #     solutionPath: ${{ inputs.solutionPath }}
-  #     buildArtifactName: ${{ inputs.buildArtifactName }}
+  test:
+    if: ${{ !inputs.skipTests }}
+    needs: build
+    uses: ../../pipelines/dotnet/generic/test/test.yml
+    with:
+      solutionPath: ${{ inputs.solutionPath }}
+      buildArtifactName: ${{ inputs.buildArtifactName }}
 
   publish-package:
     needs: ${{ inputs.skipTests && 'build' || 'test' }}
