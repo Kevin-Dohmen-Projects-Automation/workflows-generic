@@ -16,9 +16,13 @@ on:
         default: 'build-artifact'
 
 jobs:
-  run:
-    uses: ./templates/dotnet/libraries.yml
-    with:
-      solutionPath: ${{ inputs.solutionPath }}
-      skipTests: ${{ inputs.skipTests }}
-      buildArtifactName: ${{ inputs.buildArtifactName }}
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "TESTTTT"
+  # run:
+  #   uses: ./templates/dotnet/libraries.yml
+  #   with:
+  #     solutionPath: ${{ inputs.solutionPath }}
+  #     skipTests: ${{ inputs.skipTests }}
+  #     buildArtifactName: ${{ inputs.buildArtifactName }}
