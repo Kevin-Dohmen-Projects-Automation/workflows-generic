@@ -1,7 +1,7 @@
 name: dotnet-libraries-entrypoint
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       solutionPath:
         required: true
@@ -21,9 +21,9 @@ jobs:
     steps:
     - name: Test
       run: echo "does it work???"
-  run:
-    uses: ./templates/dotnet/libraries.yml
-    with:
-      solutionPath: ${{ inputs.solutionPath }}
-      skipTests: ${{ inputs.skipTests }}
-      buildArtifactName: ${{ inputs.buildArtifactName }}
+  # run:
+  #   uses: ./templates/dotnet/libraries.yml
+  #   with:
+  #     solutionPath: ${{ inputs.solutionPath }}
+  #     skipTests: ${{ inputs.skipTests }}
+  #     buildArtifactName: ${{ inputs.buildArtifactName }}
