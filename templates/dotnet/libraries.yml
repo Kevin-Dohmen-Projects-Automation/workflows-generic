@@ -17,27 +17,23 @@ on:
       
 
 jobs:
-  test:
-    steps:
-    - name: Test
-      run: echo "does it work???"
-  # build:
-  #   uses: ./pipelines/dotnet/build/build.yml
-  #   with:
-  #     solutionPath: ${{ inputs.solutionPath }}
-  #     buildArtifactName: ${{ inputs.buildArtifactName }}
+  build:
+    uses: ./pipelines/dotnet/build/build.yml
+    with:
+      solutionPath: ${{ inputs.solutionPath }}
+      buildArtifactName: ${{ inputs.buildArtifactName }}
   
-  # # test:
-  # #   if: ${{ !inputs.skipTests }}
-  # #   needs: build
-  # #   uses: ./pipelines/dotnet/test/test.yml
-  # #   with:
-  # #     solutionPath: ${{ inputs.solutionPath }}
-  # #     buildArtifactName: ${{ inputs.buildArtifactName }}
-
-  # publish-package:
+  # test:
+  #   if: ${{ !inputs.skipTests }}
   #   needs: build
-  #   uses: ./pipelines/dotnet/publish/publish-package.yml
+  #   uses: ./pipelines/dotnet/test/test.yml
   #   with:
   #     solutionPath: ${{ inputs.solutionPath }}
   #     buildArtifactName: ${{ inputs.buildArtifactName }}
+
+  publish-package:
+    needs: build
+    uses: ./pipelines/dotnet/publish/publish-package.yml
+    with:
+      solutionPath: ${{ inputs.solutionPath }}
+      buildArtifactName: ${{ inputs.buildArtifactName }}
