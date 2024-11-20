@@ -6,6 +6,9 @@ on:
       solutionPath:
         required: true
         type: string
+      csprojPath:
+        required: true
+        type: string
       buildOutputDirectory:
         type: string
         default: 'build'
@@ -23,6 +26,12 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ inputs.dotnetVersion }}
+      
+      - name: Get Version
+        id: version
+        run: |
+          VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' YourProject.csproj)
+          echo "Version=$VERSION" >> $GITHUB_ENV
 
       - name: Build
         run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildOutputDirectory }}
@@ -31,4 +40,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ inputs.buildOutputDirectory }}/*
-
+          tag_name: ${{ steps.version.outputs.VERSION }}
