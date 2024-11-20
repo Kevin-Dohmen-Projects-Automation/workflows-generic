@@ -28,8 +28,11 @@ jobs:
         with:
           dotnet-version: ${{ inputs.dotnetVersion }}
 
-      - name: build
-        run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildDirectory }}
+      - name: Build
+        run: dotnet build ${{ inputs.solutionPath }} -c Release
+      
+      - name: Pack
+        run: dotnet pack ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildDirectory }}
 
       - name: Publish Package
         run: dotnet nuget push ${{ inputs.buildDirectory }}/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
