@@ -1,7 +1,7 @@
 name: dotnet-libraries-entrypoint
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       solutionPath:
         required: true
