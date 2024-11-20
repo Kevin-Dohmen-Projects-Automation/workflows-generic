@@ -17,7 +17,7 @@ on:
 
 jobs:
   run:
-    uses: ./templates/dotnet/libraries.yml
+    uses: Kevin-Dohmen-Projects/pipelines-generic/templates/dotnet/libraries.yml@main
     with:
       solutionPath: ${{ inputs.solutionPath }}
       skipTests: ${{ inputs.skipTests }}

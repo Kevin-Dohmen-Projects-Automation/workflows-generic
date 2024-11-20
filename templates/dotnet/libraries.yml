@@ -18,7 +18,7 @@ on:
 
 jobs:
   build:
-    uses: ./pipelines/dotnet/build/build.yml
+    uses: Kevin-Dohmen-Projects/pipelines-generic/pipelines/dotnet/build/build.yml@main
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
@@ -33,7 +33,7 @@ jobs:
 
   publish-package:
     needs: build
-    uses: ./pipelines/dotnet/publish/publish-package.yml
+    uses: Kevin-Dohmen-Projects/pipelines-generic/pipelines/dotnet/publish/publish-package.yml@main
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildArtifactName: ${{ inputs.buildArtifactName }}
