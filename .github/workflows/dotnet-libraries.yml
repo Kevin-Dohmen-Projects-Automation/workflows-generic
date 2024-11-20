@@ -16,9 +16,40 @@ on:
         default: 'build-artifact'
 
 jobs:
-  run:
-    uses: ./templates/dotnet/libraries.yml
-    with:
-      solutionPath: ${{ inputs.solutionPath }}
-      skipTests: ${{ inputs.skipTests }}
-      buildArtifactName: ${{ inputs.buildArtifactName }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build
+        run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildDirectory }}
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.buildArtifactName }}
+          path: ${{ inputs.buildDirectory }}
+  
+  publish-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Get Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.buildArtifactName }}
+          path: build
+      - name: Publish Package
+        run: |
+          echo "pwd:"
+          pwd
+          echo "ls -la:"
+          ls -la
+          echo "ls -la build:"
+          ls -la build
