@@ -13,46 +13,23 @@ on:
       buildDirectory:
         type: string
         default: 'build'
-      buildArtifactName:
+      dotnetVersion:
         type: string
-        default: 'build-artifact'
+        default: '8.0.x'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-      - name: Build
-        run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildDirectory }}
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ inputs.buildArtifactName }}
-          path: ${{ inputs.buildDirectory }}
-  
   publish-package:
-    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
-      - name: Get Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ inputs.buildArtifactName }}
-          path: build
+          dotnet-version: ${{ inputs.dotnetVersion }}
+
+      - name: build
+        run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildDirectory }}
+
       - name: Publish Package
-        run: |
-          echo "pwd:"
-          pwd
-          echo "ls -la:"
-          ls -la
-          echo "ls -la build:"
-          ls -la build
+        run: dotnet nuget push ${{ inputs.buildDirectory }}/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
