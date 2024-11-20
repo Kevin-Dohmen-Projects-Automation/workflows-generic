@@ -30,7 +30,7 @@ jobs:
       - name: Get Version
         id: version
         run: |
-          VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' ${{ inputs.csprojPath }})
+          VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' '${{ github.workspace }}/${{ inputs.csprojPath }}')
           echo "Version=$VERSION" >> $GITHUB_ENV
 
       - name: Build
