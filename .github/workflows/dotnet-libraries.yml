@@ -33,6 +33,7 @@ jobs:
           path: ${{ inputs.buildDirectory }}
   
   publish-package:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
