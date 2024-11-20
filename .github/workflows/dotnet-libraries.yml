@@ -11,11 +11,9 @@ on:
         type: boolean
         default: true
       buildDirectory:
-        required: true
         type: string
         default: 'build'
       buildArtifactName:
-        required: false
         type: string
         default: 'build-artifact'
 
