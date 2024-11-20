@@ -31,14 +31,11 @@ jobs:
         id: version
         run: |
           VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' '${{ github.workspace }}/${{ inputs.csprojPath }}')
-          echo "Version=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build
         run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildOutputDirectory }}
 
       - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: ${{ inputs.buildOutputDirectory }}/*
-          name: ${{ steps.version.outputs.VERSION }}
-          tag_name: ${{ steps.version.outputs.VERSION }}
+        run: |
+          gh release create ${{ env.VERSION }} ${{ inputs.buildOutputDirectory }}/* --title ${{ env.VERSION }} --notes "${{ env.VERSION }}"
