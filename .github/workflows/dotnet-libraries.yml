@@ -1,4 +1,4 @@
-name: dotnet-libraries-entrypoint
+name: Publish Package
 
 on:
   workflow_call:
@@ -6,11 +6,7 @@ on:
       solutionPath:
         required: true
         type: string
-      skipTests:
-        required: false
-        type: boolean
-        default: true
-      buildDirectory:
+      buildOutputDirectory:
         type: string
         default: 'build'
       dotnetVersion:
@@ -32,7 +28,7 @@ jobs:
         run: dotnet build ${{ inputs.solutionPath }} -c Release
       
       - name: Pack
-        run: dotnet pack ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildDirectory }}
+        run: dotnet pack ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildOutputDirectory }}
 
       - name: Publish Package
-        run: dotnet nuget push ${{ inputs.buildDirectory }}/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        run: dotnet nuget push ${{ inputs.buildOutputDirectory }}/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
