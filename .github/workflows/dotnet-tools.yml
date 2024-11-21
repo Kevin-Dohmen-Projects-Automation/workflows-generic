@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish Release
-        uses: ./.github/actions/dotnet/publish/release
+        uses: ./.github/workflows/jobs/dotnet/publish/release
         with:
           solutionPath: ${{ inputs.solutionPath }}
           csprojPath: ${{ inputs.csprojPath }}
