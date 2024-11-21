@@ -18,7 +18,7 @@ on:
 
 jobs:
   publish-release:
-    uses: ./.github/workflows/pipelines/dotnet/dotnet-tools.yml
+    uses: ./.github/workflows/jobs/dotnet/publish/release.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
       csprojPath: ${{ inputs.csprojPath }}

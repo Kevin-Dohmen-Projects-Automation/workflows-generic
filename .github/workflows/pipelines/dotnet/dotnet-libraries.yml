@@ -1,12 +1,9 @@
-name: Publish Release
+name: Publish Package
 
 on:
   workflow_call:
     inputs:
       solutionPath:
-        required: true
-        type: string
-      csprojPath:
         required: true
         type: string
       buildOutputDirectory:
@@ -17,10 +14,9 @@ on:
         default: '8.0.x'
 
 jobs:
-  publish-release:
-    uses: ./.github/workflows/pipelines/dotnet/dotnet-tools.yml
+  publish-package:
+    uses: ./.github/workflows/jobs/dotnet/publish/package.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
-      csprojPath: ${{ inputs.csprojPath }}
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
       dotnetVersion: ${{ inputs.dotnetVersion }}

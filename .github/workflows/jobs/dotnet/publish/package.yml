@@ -1,0 +1,34 @@
+name: Publish Package
+
+on:
+  workflow_call:
+    inputs:
+      solutionPath:
+        required: true
+        type: string
+      buildOutputDirectory:
+        type: string
+        default: 'build'
+      dotnetVersion:
+        type: string
+        default: '8.0.x'
+
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ inputs.dotnetVersion }}
+
+      - name: Build
+        run: dotnet build ${{ inputs.solutionPath }} -c Release
+      
+      - name: Pack
+        run: dotnet pack ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildOutputDirectory }}
+
+      - name: Publish Package
+        run: dotnet nuget push ${{ inputs.buildOutputDirectory }}/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
