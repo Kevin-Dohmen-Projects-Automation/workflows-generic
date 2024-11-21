@@ -1,0 +1,41 @@
+name: Publish Release
+
+inputs:
+  solutionPath:
+    required: true
+    type: string
+  csprojPath:
+    required: true
+    type: string
+  buildOutputDirectory:
+    type: string
+    default: 'build'
+  dotnetVersion:
+    type: string
+    default: '8.0.x'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnetVersion }}
+    
+    - name: Get Version
+      id: version
+      run: |
+        VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' '${{ github.workspace }}/${{ inputs.csprojPath }}')
+        echo "Version: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Build
+      run: dotnet build ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildOutputDirectory }}
+
+    - name: Publish GitHub Release
+      run: |
+        gh release create ${{ env.VERSION }} ${{ inputs.buildOutputDirectory }}/* --title ${{ env.VERSION }} --notes "${{ env.VERSION }}"
+      env:
+        GH_TOKEN: ${{ github.token }}
