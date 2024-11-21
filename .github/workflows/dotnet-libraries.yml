@@ -15,7 +15,7 @@ on:
 
 jobs:
   publish-package:
-    uses: ./.github/workflows/pipelines/dotnet/dotnet-libraries.yml
+    uses: ./.github/actions/package.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
