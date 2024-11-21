@@ -1,0 +1,27 @@
+
+on:
+  workflow_call:
+    inputs:
+      # dotnet settings
+      solutionPath:
+        required: true
+        type: string
+      csprojPath:
+        required: true
+        type: string
+      buildOutputDirectory:
+        type: string
+        default: 'build'
+      dotnetVersion:
+        type: string
+        default: '8.0.x'
+      
+      # publish settings
+      publish-package:
+        type: boolean
+        default: false
+      publish-release:
+        type: boolean
+        default: false
+
+jobs:

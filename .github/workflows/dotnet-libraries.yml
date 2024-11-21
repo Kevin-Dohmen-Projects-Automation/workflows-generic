@@ -15,7 +15,7 @@ on:
 
 jobs:
   publish-package:
-    uses: ./.github/actions/package.yml
+    uses: ./.github/workflows/dotnet-job-publish-package.yml
     with:
       solutionPath: ${{ inputs.solutionPath }}
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
