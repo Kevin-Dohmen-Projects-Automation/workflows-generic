@@ -24,6 +24,11 @@ on:
       publish-release:
         type: boolean
         default: false
+      
+      # auth
+      GithubToken:
+        required: true
+        type: string
 
 jobs:
   publish-package:
@@ -33,6 +38,7 @@ jobs:
       solutionPath: ${{ inputs.solutionPath }}
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
       dotnetVersion: ${{ inputs.dotnetVersion }}
+      GithubToken: ${{ inputs.GithubToken }}
   publish-release:
     if: ${{ inputs.publish-release == true }}
     uses: ./.github/workflows/dotnet-job-publish-release.yml
@@ -41,3 +47,4 @@ jobs:
       csprojPath: ${{ inputs.csprojPath }}
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
       dotnetVersion: ${{ inputs.dotnetVersion }}
+      GithubToken: ${{ inputs.GithubToken }}
