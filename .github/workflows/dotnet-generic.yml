@@ -1,3 +1,4 @@
+name: Dotnet Generic
 
 on:
   workflow_call:
@@ -25,3 +26,18 @@ on:
         default: false
 
 jobs:
+  publish-package:
+    if: ${{ inputs.publish-package == true }}
+    uses: ./.github/workflows/dotnet-job-publish-package.yml
+    with:
+      solutionPath: ${{ inputs.solutionPath }}
+      buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
+      dotnetVersion: ${{ inputs.dotnetVersion }}
+  publish-release:
+    if: ${{ inputs.publish-release == true }}
+    uses: ./.github/workflows/dotnet-job-publish-release.yml
+    with:
+      solutionPath: ${{ inputs.solutionPath }}
+      csprojPath: ${{ inputs.csprojPath }}
+      buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
+      dotnetVersion: ${{ inputs.dotnetVersion }}
