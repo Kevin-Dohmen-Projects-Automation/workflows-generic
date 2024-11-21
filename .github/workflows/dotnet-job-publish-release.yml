@@ -15,9 +15,9 @@ on:
       dotnetVersion:
         type: string
         default: '8.0.x'
-      GithubToken:
+    secrets:
+      GITHUB_TOKEN:
         required: true
-        type: string
 
 jobs:
   publish-release:
@@ -44,4 +44,4 @@ jobs:
         run: |
           gh release create ${{ env.VERSION }} ${{ inputs.buildOutputDirectory }}/* --title ${{ env.VERSION }} --notes "${{ env.VERSION }}"
         env:
-          GH_TOKEN: ${{ inputs.GithubToken }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

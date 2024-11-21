@@ -12,9 +12,9 @@ on:
       dotnetVersion:
         type: string
         default: '8.0.x'
-      GithubToken:
+    secrets:
+      GITHUB_TOKEN:
         required: true
-        type: string
 
 jobs:
   publish-package:
@@ -34,4 +34,4 @@ jobs:
         run: dotnet pack ${{ inputs.solutionPath }} -c Release -o ${{ inputs.buildOutputDirectory }}
 
       - name: Publish Package
-        run: dotnet nuget push ${{ inputs.buildOutputDirectory }}/*.nupkg --api-key ${{ inputs.GithubToken }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        run: dotnet nuget push ${{ inputs.buildOutputDirectory }}/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
