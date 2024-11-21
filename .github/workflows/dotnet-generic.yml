@@ -37,7 +37,7 @@ jobs:
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
       dotnetVersion: ${{ inputs.dotnetVersion }}
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GitHubToken }}
+      GitHubToken: ${{ secrets.GitHubToken }}
   publish-release:
     if: ${{ inputs.publish-release == true }}
     uses: ./.github/workflows/dotnet-job-publish-release.yml
@@ -47,4 +47,4 @@ jobs:
       buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
       dotnetVersion: ${{ inputs.dotnetVersion }}
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GitHubToken }}
+      GitHubToken: ${{ secrets.GitHubToken }}
