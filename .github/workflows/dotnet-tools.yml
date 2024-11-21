@@ -18,12 +18,9 @@ on:
 
 jobs:
   publish-release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Publish Release
-        uses: ./.github/workflows/jobs/dotnet/publish/release
-        with:
-          solutionPath: ${{ inputs.solutionPath }}
-          csprojPath: ${{ inputs.csprojPath }}
-          buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
-          dotnetVersion: ${{ inputs.dotnetVersion }}
+    uses: ./.github/workflows/jobs/dotnet/publish/release.yml
+    with:
+      solutionPath: ${{ inputs.solutionPath }}
+      csprojPath: ${{ inputs.csprojPath }}
+      buildOutputDirectory: ${{ inputs.buildOutputDirectory }}
+      dotnetVersion: ${{ inputs.dotnetVersion }}
