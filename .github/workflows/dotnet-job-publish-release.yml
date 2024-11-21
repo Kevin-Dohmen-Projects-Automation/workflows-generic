@@ -16,7 +16,7 @@ on:
         type: string
         default: '8.0.x'
     secrets:
-      GITHUB_TOKEN:
+      GitHubToken:
         required: true
 
 jobs:
@@ -44,4 +44,4 @@ jobs:
         run: |
           gh release create ${{ env.VERSION }} ${{ inputs.buildOutputDirectory }}/* --title ${{ env.VERSION }} --notes "${{ env.VERSION }}"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GitHubToken }}
